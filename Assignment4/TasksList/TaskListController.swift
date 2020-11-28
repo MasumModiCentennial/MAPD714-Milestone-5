@@ -13,6 +13,8 @@ class TaskListController: UIViewController {
     
     @IBOutlet weak var btnAddMore: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    
+    
     var arrTaskList: Array<ModelTask> = Array<ModelTask>()
     
     override func viewDidLoad() {
@@ -61,12 +63,18 @@ func setButtonShadow(_ button: UIButton) {
 
 // Table view data source controller
 extension TaskListController: UITableViewDataSource{
+    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arrTaskList.count // Returns number of rows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AddTaskCell", for: indexPath) //Find the cell and recycle it
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AddTaskCell", for: indexPath) as! AddTaskCell //Find the cell and recycle it
+        let currentTask = self.arrTaskList[indexPath.row]
+        cell.currentTask = currentTask
+        cell.parentContext = self
+        cell.tfTaskName.text = currentTask.name
         return cell
     }
 }

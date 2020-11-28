@@ -109,6 +109,12 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="imgEdit" destination="w9M-hM-OmO" id="M3U-dh-jsm"/>
+                                                    <outlet property="lblDueDate" destination="KAF-je-M4R" id="b0c-AQ-eia"/>
+                                                    <outlet property="swPending" destination="v0B-89-C5V" id="DCf-R9-HDA"/>
+                                                    <outlet property="tfTaskName" destination="Vxs-7f-eD4" id="YRo-Bl-ym5"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
