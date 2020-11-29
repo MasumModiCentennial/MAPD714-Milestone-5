@@ -25,7 +25,10 @@ class TaskListController: UIViewController {
         
         //Apply Shadow to buttons
         setButtonShadow(self.btnAddMore)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupUI()
     }
     
@@ -38,6 +41,7 @@ class TaskListController: UIViewController {
         }
     }
     
+    //save list to offline
     func addToPreference() {
         let taskList = try! JSONEncoder().encode(self.arrTaskList)
         setValueInPreference(forKey: "taskList", value: taskList)
@@ -74,6 +78,7 @@ extension TaskListController: UITableViewDataSource{
         let currentTask = self.arrTaskList[indexPath.row]
         cell.currentTask = currentTask
         cell.parentContext = self
+        cell.currentIndex = indexPath.row
         cell.tfTaskName.text = currentTask.name
         return cell
     }

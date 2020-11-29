@@ -41,11 +41,3 @@ func getValueFromPreference(forKey: String) -> Any? {
     }
     return nil
 }
-
-func removeValueFromPreference(forKey: String) {
-    DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-        let userDefault = UserDefaults.standard
-        userDefault.removeObject(forKey: forKey)
-        userDefault.synchronize()
-    }
-}
