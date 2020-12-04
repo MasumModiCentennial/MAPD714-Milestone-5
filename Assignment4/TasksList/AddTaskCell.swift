@@ -79,8 +79,8 @@ extension AddTaskCell: UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.swPending.isHidden = false
-        self.imgEdit.isHidden = false
+        self.swPending.isHidden = true
+        self.imgEdit.isHidden = true
         return true
     }
     

@@ -22,7 +22,8 @@ class TaskListController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.tableView.dataSource = self
-        
+        self.tableView.delegate = self
+        self.tableView.allowsMultipleSelectionDuringEditing = false;
         //Apply Shadow to buttons
         setButtonShadow(self.btnAddMore)
     }
@@ -66,7 +67,7 @@ func setButtonShadow(_ button: UIButton) {
 
 
 // Table view data source controller
-extension TaskListController: UITableViewDataSource{
+extension TaskListController: UITableViewDataSource, UITableViewDelegate{
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,4 +83,47 @@ extension TaskListController: UITableViewDataSource{
         cell.tfTaskName.text = currentTask.name
         return cell
     }
+    
+    //Swipe left open details screen
+   func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
+        let editAction = UIContextualAction(style: .normal, title:  "Edit", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            if let cell = tableView.cellForRow(at: indexPath) as? AddTaskCell{
+                cell.openDetailsScreen()
+            }
+                success(true)
+            })
+   editAction.backgroundColor = .blue
+
+            return UISwipeActionsConfiguration(actions: [editAction])
+    }
+
+    //Swipe right delete on long swipe and toggle button
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
+        let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            self.arrTaskList.remove(at: indexPath.row)
+            self.addToPreference()
+            tableView.reloadData()
+            success(true)
+        })
+        deleteAction.backgroundColor = .red
+        
+        let toggleAction = UIContextualAction(style: .normal, title:  "Toggle", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            if let cell = tableView.cellForRow(at: indexPath) as? AddTaskCell{
+                cell.currentTask.isCompleted = !cell.currentTask.isCompleted
+                self.addToPreference()
+                tableView.reloadData()
+                success(true)
+            }
+            success(false)
+        })
+        toggleAction.backgroundColor = .green
+
+        return UISwipeActionsConfiguration(actions: [deleteAction,toggleAction])
+    }
+    
+    
 }

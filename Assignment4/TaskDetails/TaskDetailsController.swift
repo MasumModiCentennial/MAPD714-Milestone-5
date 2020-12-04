@@ -47,6 +47,7 @@ class TaskDetailsController: UIViewController {
         setButtonShadow(self.btnDelete)
         self.tfTaskName.delegate = self
         self.tfTaskDescription.delegate = self
+
     }
     
     // on due date switch changed
